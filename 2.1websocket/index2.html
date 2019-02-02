@@ -1,0 +1,28 @@
+<body>
+    <h1>首页</h1>
+    <div>
+        <h2>发送消息</h2>
+        <input id="msg" type="text"  />
+        <input type="button" value="发送" onclick="sendMsg()">
+        <h2>接收消息</h2>
+        <div id="container">
+
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script>
+
+        ws = new WebSocket('ws://127.0.0.1:5000/test');
+        ws.onmessage = function (event) {
+            var tag = document.createElement('div');
+            tag.className = 'msg-item';
+            tag.innerText = event.data;
+            $('#container').append(tag);
+        }
+
+        function sendMsg() {
+            ws.send($('#msg').val());
+        }
+    </script>
+</body>
